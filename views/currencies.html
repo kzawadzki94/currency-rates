@@ -1,1 +1,16 @@
-<h2>Currencies</h2>
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Waluta</th>
+            <th scope="col">Kurs</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="currency in currencies">
+            <th scope="row">{{$index + 1}}</th>
+            <td>{{currency.name}}</td>
+            <td>{{currency.rate}}</td>
+        </tr>
+    </tbody>
+</table>
