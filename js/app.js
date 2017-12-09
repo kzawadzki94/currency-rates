@@ -2,6 +2,7 @@ var app = angular.module("app", ["ngRoute"]);
 
 // Routing
 app.config(function ($routeProvider, $locationProvider) {
+
   $locationProvider.hashPrefix("");
 
   $routeProvider
@@ -21,7 +22,15 @@ app.config(function ($routeProvider, $locationProvider) {
 });
 
 app.controller("currencyController", function ($scope, dataFactory) {
-  $scope.base = "USD";
+
+  $scope.names = ["PLN", "EUR", "USD", "GBP", "CHF",
+    "AUD", "BGN", "BRL", "CAD", "CNY", "CZK", "DKK",
+    "HKD", "HRK", "HUF", "IDR", "ILS", "INR", "JPY",
+    "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "RON",
+    "RUB", "SEK", "SGD", "THB", "TRY", "ZAR",
+  ];
+
+  $scope.base = $scope.names[0];
 
   $scope.getData = function () {
     dataFactory.getCurrencies($scope.base).then(

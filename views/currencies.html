@@ -1,27 +1,33 @@
 <div class="row">
-    <div class="col-lg-10">
-        <table class="table table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Waluta</th>
-                    <th scope="col">Kurs</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="currency in currencies">
-                    <th scope="row">{{$index + 1}}</th>
-                    <td>{{currency.name}}</td>
-                    <td>1 {{base}} = {{currency.rate | number:2}} {{currency.name}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="col-lg-2">
-        <select class="custom-select" ng-model="base" ng-change="getData()" ng-init="getData()">
-            <option value="USD">USD</option>
-            <option value="PLN">PLN</option>
-        </select>
-    </div>
+    <p>
+        <h2>Kursy walut</h2>
+    </p>
+</div>
+<div class="row">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Waluta</th>
+                <th scope="col">Kurs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="text" ng-model="searchName" class="form-control">
+                </td>
+                <td>
+                    <select class="custom-select" ng-model="base" ng-change="getData()" ng-init="getData()" ng-options="item for item in names">
+                    </select>
+                </td>
+            </tr>
+            <tr ng-repeat="currency in currencies | filter: searchName">
+                <th scope="row">{{$index + 1}}</th>
+                <td>{{currency.name}}</td>
+                <td>1 {{base}} = {{currency.rate | number:2}} {{currency.name}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
