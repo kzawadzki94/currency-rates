@@ -8,8 +8,12 @@
         <thead class="table-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Waluta</th>
-                <th scope="col">Kurs</th>
+                <th scope="col">
+                    <a href="#" ng-click="setSorting('name')">Waluta</a>
+                </th>
+                <th scope="col">
+                    <a href="#" ng-click="setSorting('rate')">Kurs</a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +27,7 @@
                     </select>
                 </td>
             </tr>
-            <tr ng-repeat="currency in currencies | filter: searchName">
+            <tr ng-repeat="currency in currencies | filter: searchName | orderBy:sortType:sortReverse">
                 <th scope="row">{{$index + 1}}</th>
                 <td>{{currency.name}}</td>
                 <td>1 {{base}} = {{currency.rate | number:2}} {{currency.name}}</td>
