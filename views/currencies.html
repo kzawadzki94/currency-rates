@@ -23,16 +23,16 @@
                     <input type="text" ng-model="searchName" class="form-control">
                 </td>
                 <td>
-                    <select class="custom-select" ng-model="base" ng-change="getData()" ng-init="getData()" ng-options="key as value for (key, value) in countries">
+                    <select class="custom-select" ng-model="base" ng-change="getData()" ng-init="getData()" ng-options="key as value for (key, value) in fullnames">
                     </select>
                 </td>
             </tr>
-            <tr ng-repeat="currency in currencies | filter: searchName | orderBy:sortType:sortReverse">
+            <tr ng-repeat="rate in rates | filter: searchName | orderBy:sortType:sortReverse">
                 <th scope="row">{{$index + 1}}</th>
                 <td>
-                    <img ng-src="img/flags/{{currency.name}}.png"> {{currency.fullname}}
+                    <img ng-src="img/flags/{{rate.name}}.png"> {{rate.fullname}}
                 </td>
-                <td>1 {{base}} = {{currency.rate | number:2}} {{currency.name}}</td>
+                <td>1 {{base}} = {{rate.rate | number:2}} {{rate.name}}</td>
             </tr>
         </tbody>
     </table>
