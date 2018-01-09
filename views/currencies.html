@@ -25,6 +25,7 @@
                 <td>
                     <select class="custom-select" ng-model="base" ng-change="getData()" ng-init="getData()" ng-options="key as value for (key, value) in fullnames">
                     </select>
+                    Czas wykonania: {{executionTime}} s
                 </td>
             </tr>
             <tr ng-repeat="rate in rates | filter: searchName | orderBy:sortType:sortReverse">

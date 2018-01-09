@@ -12,13 +12,17 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl: "/views/currencies.html",
       controller: "currencyController"
     })
-    .when("/crypto", {
-      templateUrl: "/views/crypto.html"
-    })
     .otherwise({
       redirectTo: "/currencies"
     });
 });
+
+app.config([
+  "$httpProvider",
+  function($httpProvider) {
+    $httpProvider.interceptors.push("executionTimeProvider");
+  }
+]);
 
 app.controller("currencyController", function($scope, dataFactory) {
   $scope.base = "PLN";
@@ -31,6 +35,10 @@ app.controller("currencyController", function($scope, dataFactory) {
         dataFactory.getRates($scope.base).then(
           function(response) {
             $scope.rates = getFormattedRates(response.data.rates);
+            $scope.executionTime =
+              (response.config.responseTimestamp -
+                response.config.requestTimestamp) /
+              1000;
           },
           function(error) {
             console.log(error.message);
@@ -78,13 +86,29 @@ app.factory("dataFactory", function($http) {
   var currencyApi = "https://api.fixer.io/latest?base=";
 
   dataFactory.getJSONFromFile = function(filePath) {
-    return $http.get(filePath);
+    return $http.get(filePath, { cache: true });
   };
 
   dataFactory.getRates = function(baseCurrency) {
     var request = currencyApi + baseCurrency;
-    return $http.get(request);
+    return $http.get(request, { cache: true });
   };
 
   return dataFactory;
 });
+
+app.factory("executionTimeProvider", [
+  function() {
+    var executionTimeProvider = {
+      request: function(config) {
+        config.requestTimestamp = new Date().getTime();
+        return config;
+      },
+      response: function(response) {
+        response.config.responseTimestamp = new Date().getTime();
+        return response;
+      }
+    };
+    return executionTimeProvider;
+  }
+]);
