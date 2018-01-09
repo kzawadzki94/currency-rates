@@ -50,7 +50,8 @@ app.controller("currencyController", function($scope, dataFactory) {
       }
     );
 
-    $scope.sortType = localStorage.getItem("sortType");
+    // If localstorage is empty, set default sorting by fullname
+    $scope.sortType = localStorage.getItem("sortType") || "fullname";
     $scope.sortReverse = JSON.parse(localStorage.getItem("sortReverse"));
   };
 
